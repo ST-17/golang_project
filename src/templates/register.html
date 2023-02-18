@@ -1,0 +1,18 @@
+{{ define "register" }}
+
+{{ template "header" }}
+
+<main class="px-3">
+    <h1 class="cover-heading">Registration</h1>
+    <form action="/save_register/" method="post">
+        <input type="text" name="user_name" id="user_name" placeholder="Your Name" class="form-control"><br>
+        <input type="text" name="user_email" id="user_email" placeholder="Your Email" class="form-control"><br>
+        <input type="password" name="user_password" id="user_password" placeholder="Password" class="form-control"><br>
+        <input type="password" name="user_repeat_password" id="user_repeat_password" placeholder="Repeat your password" class="form-control"><br>
+        <button class="btn btn-warning">Register</button>
+    </form>
+</main>
+
+{{ template "footer" }}
+
+{{ end }}
