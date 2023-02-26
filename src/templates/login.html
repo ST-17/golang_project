@@ -1,0 +1,23 @@
+{{ define "login" }}
+
+{{ template "header" }}
+
+<main class="px-3">
+    <h1 class="cover-heading">Log in</h1>
+    <form action="/check_login/" method="post">
+        <input type="text" name="user_email" id="user_email" placeholder="Your Email" class="form-control"><br>
+        <input type="password" name="user_password" id="user_password" placeholder="Password" class="form-control"><br>
+        <button class="btn btn-warning">Log in</button>
+    </form>
+</main>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Need An Account? <a class="ml-2" href="http://localhost:8080/register/">Sign Up Now</a>
+
+        
+    </small>
+</div>
+
+{{ template "footer" }}
+
+{{ end }}
