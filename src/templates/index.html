@@ -11,15 +11,18 @@
         <button id="click" class="btn btn-warning">Search</button>
     </form>
 
-    {{ range . }}
-        <div class="alert alert-light">
+
+    <div class="" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+        {{ range . }}
+        <div class="alert alert-light" style="width: 49%;">
             <h2>{{ .Title }}</h2>
             <p>{{ .Price }}tg</p>
             <a href="/post/{{ .Id }}" class="btn btn-primary">Read more</a>
         </div>
-    {{ else }}
-        <p class="lead">No items</p>
-    {{ end }}
+        {{ else }}
+            <p class="lead">No items</p>
+        {{ end }}
+    </div>
 
     <p class="lead">
         <a href="#" class="btn btn-lg btn-light fw-bold border-white bg-white">Learn more</a>
