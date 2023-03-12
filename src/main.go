@@ -32,7 +32,7 @@ func index(w http.ResponseWriter, r *http.Request){
 		fmt.Fprint(w, err.Error())
 	}
 
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
     if err != nil {
         panic(err)
     }
@@ -75,7 +75,7 @@ func save_article(w http.ResponseWriter, r *http.Request){
 	if title == "" || anons == "" || price == ""{
 		fmt.Fprintf(w, "Not all info fill in")
 	} else{
-		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
     if err != nil {
         panic(err)
     }
@@ -110,7 +110,7 @@ func save_register(w http.ResponseWriter, r *http.Request){
 
 
 	if user_name != "" && user_email != "" && user_password != "" && user_repeat_password != ""{
-		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
 		if err != nil{
 			panic(err)
 		}
@@ -140,7 +140,7 @@ func check_login(w http.ResponseWriter, r *http.Request) {
     FormEmail := r.FormValue("user_email")
     FormPassword := r.FormValue("user_password")
 
-    db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+    db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
     if err != nil {
         panic(err)
     }
@@ -164,7 +164,7 @@ func show_post(w http.ResponseWriter, r *http.Request){
 	t, err := template.ParseFiles("templates/show.html","templates/header.html","templates/footer.html")
 
 
-    db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+    db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
     if err != nil {
         panic(err)
     }
@@ -200,7 +200,7 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, err.Error())
 	}
 
-	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/goland")
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
     if err != nil {
         panic(err)
     }
