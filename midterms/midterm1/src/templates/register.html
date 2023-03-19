@@ -1,0 +1,53 @@
+{{ define "register" }}
+
+{{ template "header" }}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<main class="px-3" style="padding: 60px 0;">
+    <h1 class="cover-heading">Registration</h1>
+    <form action="/save_register/" method="post" name="form1">
+        <input type="text" name="user_name" id="user_name" placeholder="Your Name" class="form-control"><br>
+        <input type="text" name="user_email" id="user_email" placeholder="Your Email" class="form-control"><br>
+        <input type="password" name="user_password" id="user_password" placeholder="Password" class="form-control"><br>
+        <input type="password" name="user_repeat_password" id="user_repeat_password" placeholder="Repeat your password" class="form-control"><br>
+        <button id="click" class="btn btn-warning">Register</button>
+    </form>
+</main>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Already have An Account? <a class="ml-2" href="http://localhost:8080/login/">Sign In Now</a>
+    </small>
+</div>
+
+
+<script>
+    $('#click').on('click', function(){
+        var user_name = document.forms["form1"]["user_name"].value;
+        var user_email = document.forms["form1"]["user_email"].value;
+        var user_password = document.forms["form1"]["user_password"].value;
+        var user_repeat_password = document.forms["form1"]["user_repeat_password"].value;
+
+        if (user_name == "" || user_email == "" || user_password == "" || user_repeat_password == ""){
+            Swal.fire({
+            title: 'Wrong!',
+            icon : 'error',
+            showConfirmButton : true,
+        }).then(function(){
+            window.location = "http://localhost:8080/register/";
+        });
+        } else{
+        Swal.fire({
+            title: 'Your account is created!',
+            icon : 'success',
+            showConfirmButton : true,
+        }).then(function(){
+            window.location = "http://localhost:8080/login/";
+        });
+    }
+    })
+</script>
+
+
+{{ template "footer" }}
+
+{{ end }}

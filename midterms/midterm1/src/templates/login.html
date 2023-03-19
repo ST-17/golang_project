@@ -1,0 +1,37 @@
+{{ define "login" }}
+
+{{ template "header" }}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<main class="px-3" style="padding: 110px 0;">
+    <h1 class="cover-heading">Log in</h1>
+    <form action="/check_login/" method="post" name="form2">
+        <input type="text" name="user_email" id="user_email" placeholder="Your Email" class="form-control"><br>
+        <input type="password" name="user_password" id="user_password" placeholder="Password" class="form-control"><br>
+        <button id="click" class="btn btn-warning">Log in</button>
+    </form>
+</main>
+<div class="border-top pt-3">
+    <small class="text-muted">
+        Need An Account? <a class="ml-2" href="http://localhost:8080/register/">Sign Up Now</a>
+    </small>
+</div>
+
+<script>
+    $('#click').on('click', function(){
+        var user_email = document.forms["form2"]["user_email"].value;
+        var user_password = document.forms["form2"]["user_password"].value;
+
+            Swal.fire({
+            title: 'Wrong!',
+            icon : 'error',
+            showConfirmButton : true,
+        }).then(function(){
+            window.location = "http://localhost:8080/login/";
+        });
+    })
+</script>
+
+{{ template "footer" }}
+
+{{ end }}

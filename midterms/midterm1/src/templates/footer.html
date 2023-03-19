@@ -1,0 +1,102 @@
+{{ define "footer" }}
+<footer> 
+  <section class="footer">
+    <div class="container">
+      <div class="row">
+
+        <div class="col-md-3 col-6">
+          <h4>Information</h4>
+          <ul class="list-unstyled">
+            <li><a href="#">Main</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Delivery</a></li>
+            <li><a href="#">Contacts</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <h4>Work time</h4>
+          <ul class="list-unstyled">
+            <li>Almaty, 90/52 Satpaeva str.</li>
+            <li>Mon-Sun: 9:00 - 21:00</li>
+            <li>Without a break</li>
+          </ul>
+        </div>
+
+        <div class="col-md-3 col-6">
+          <h4>Contacts</h4>
+          <ul class="list-unstyled">
+            <li><a href="tel: 87769201561">8 (776) 920-15-61</a></li>
+            <li><a href="tel: 87082921857">8 (708) 292-18-67</a></li>
+            <li><a href="tel: 87778360877">8 (777) 836-08-77</a></li>
+            <li><a href="tel: 87476042207">8 (747) 604-22-07</a></li>
+          </ul>
+        </div> 
+
+        <div class="col-md-3 col-6">
+          <h4>Social networks</h4>
+          <div class="footer-icons">
+            <div class="social">
+                <a href="#"><ion-icon name="logo-facebook"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-twitter"></ion-icon></a>
+                <a href="#"><ion-icon name="logo-linkedin"><ion-icon></a>
+                <a href="#"><ion-icon name="logo-instagram"></ion-icon></a>
+            </div>
+          </div>
+        </div> 
+      </div>
+    </div>
+  </section>
+</footer>
+</div>
+</body>
+
+<style>
+
+.footer {
+     width: 100%;
+     justify-content: center;
+}
+.footer h4 { 
+     color: #ccc;
+     text-transform: uppercase;
+     font-size: 20px;
+     border-bottom: 1px solid #666;
+     padding-bottom: 3px;
+     padding-top: 20px;
+     padding-left: 30px;
+}
+
+.footer a {
+    text-decoration: none;
+    transition: .3s;
+}
+
+.footer a:hover {
+     color: #fff;
+     text-decoration: underline;
+}
+
+.footer a, footer li {
+     color: #c8c8c8;
+}
+
+.footer li a {
+     display: block;
+}
+
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+input, textarea{
+  width: 60% !important;
+  margin: 0 auto !important;
+}
+.social a {
+     font-size: 2em;/*размер иконок*/
+     color: #fff;/*цвет иконок*/
+     width: 22%;
+     margin: 0 auto;
+     display: inline-block;/*отображать как строчно-блочный элемент*/
+     transition: 0.5s;/*плавный переход*/
+}
+</style>
+{{ end }}
