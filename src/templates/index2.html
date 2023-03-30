@@ -1,27 +1,118 @@
 {{ define "index2" }}
 
-{{ template "header" }}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="libs/bootstrap-reboot.min.css">
+    <link rel="stylesheet" href="libs/bootstrap-grid.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://getbootstrap.com/docs/5.3/examples/cover/cover.css">
+    <link rel="stylesheet" href="static/css/main.css">
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+   
+
+
+</head>
+
+
+
+<body class="d-flex h-100 text-bg-dark">
+    <div class="container d-flex w-200 h-100 p-3 mx-auto flex-column">
+      <header class="">
+        <div>
+          
+          <nav class="nav nav-masthead justify-content-center float-md-end">
+            <a class="nav-link fw-bold py-1 px-0" aria-current="page" href="/">Home</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/create/">Add item</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/register/">Sign up</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/login/">Log in</a>
+          </nav>
+        </div>
+      </header>
+
 
 <main class="px-3">
-    <h1 class="cover-heading">Main Menu</h1>
-    <p class="lead" style="width: 50%; margin: 0 auto; margin-bottom: 15px;">Store may carry both branded and unbranded products, with a range of price points to cater to customers with different budgets.  All-in-One Shop offers a vast selection of products, including clothing, toys, electronics, and beauty products, all in one convenient location.</p>
-    
-    <form action="/search/" method="post">
-        <input type="text" name="query" id="query" placeholder="Search" class="form-control">
-        <button id="click" class="btn btn-warning" style="margin-top: 20px;">Search</button>
-    </form>
-
-    <div style="display: flex; flex-wrap: wrap; justify-content: space-between; padding: 70px 0;">
-        {{ range . }}
-        <div class="alert alert-light" style="width: 50%; margin: 0 auto;">
-            <h2>{{ .Title }}</h2>
-            <p>{{ .Price }}tg</p>
-            <a href="/post/{{ .Id }}" class="btn btn-primary">Read more</a>
-        </div>
-        {{ else }}
-            <p class="lead">No items</p>
-        {{ end }}
+ <div class="base">
+    <div class="logo">
+        <h3>All-in-One Shop</h3>
     </div>
+    <div class="search">
+    <form action="/search/" method="post" style="display: flex; z-index: 3;">
+        <input type="text" name="query" id="query" placeholder="Search All-in-One" class="form-control">
+        <button id="click" class="btn btn-warning" style="margin: 0 10px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16" style="color:black">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+          </svg>
+        </button>
+    </form>
+</div>
+</div>
+
+    <div style="display: flex;  padding: 70px 0;">
+        <form action="/filter/" method="post" style="width: 16%;">
+            <div style="margin: 0 auto;">
+                <p class="lead" style="text-align: left; margin: 0;">Price</p>
+                <div style="display: flex;">
+                    <input type="number" name="query1" id="query1" placeholder="min" class="form-control" style="width: 35% !important; font-size: 10px;">
+                    <input type="number" name="query2" id="query2" placeholder="max" class="form-control" style="width: 35% !important; font-size: 10px;">
+                    <button id="click" class="btn btn-warning">Go</button>
+                </div>
+            </div>
+        </form>
+
+        <div style="display: flex; flex-wrap: wrap; justify-content: flex-start; width: 85%;">
+            {{ range . }}
+            <div class="alert alert-light" style="width: 30%; margin: 5px;">
+                <h2>{{ .Title }}</h2>
+                <p>{{ .Price }}tg</p>
+                <a href="/post/{{ .Id }}" class="btn btn-primary">Read more</a>
+            </div>
+            {{ else }}
+                <p class="lead">No items</p>
+            {{ end }}
+        </div>
+    </div>
+
+
+    <style>
+        .base { 
+            display: flex;
+        
+        }
+        .search {
+            width: 60%;
+            margin: 0 10px;
+           
+        }
+        .search button{
+            
+            
+        }
+        .search button:hover {
+            background-color:  rgb(189, 111, 43);; 
+            color: #FFFFFF;
+            border-color: #FF4136;
+            transition: 0.5s;
+            
+            
+        }
+        .logo{ 
+            margin: 0 20px;
+            
+        }
+        
+        #carouselExampleFade{
+            margin-top: 50px;
+        }
+        </style>
 
 </main>
 
