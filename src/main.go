@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 
 	"github.com/gorilla/mux"
 	
@@ -14,7 +15,8 @@ import (
 
 type Article struct{
 	Id uint16
-	Title, Anons, Price string
+	Title, Anons string
+	Price int
 }
 type User struct{
 	Id uint16
@@ -70,9 +72,13 @@ func create(w http.ResponseWriter, r *http.Request){
 func save_article(w http.ResponseWriter, r *http.Request){
 	title := r.FormValue("title")
 	anons := r.FormValue("anons")
-	price := r.FormValue("price")
+	price, err := strconv.Atoi(r.FormValue("price"))
+	
+	if err != nil {
+		fmt.Println("Error during conversion")
+	}
 
-	if title == "" || anons == "" || price == ""{
+	if title == "" || anons == ""{
 		fmt.Fprintf(w, "Not all info fill in")
 	} else{
 		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
@@ -82,7 +88,7 @@ func save_article(w http.ResponseWriter, r *http.Request){
 		defer db.Close()
 		
 		// Установка данных
-		insert, err := db.Query(fmt.Sprintf("INSERT INTO `article` (`title`,`anons`,`price`) VALUES('%s','%s','%s')", title, anons, price))
+		insert, err := db.Query(fmt.Sprintf("INSERT INTO `article` (`title`,`anons`,`price`) VALUES('%s','%s','%d')", title, anons, price))
 		if err != nil{
 			panic(err)
 		}
@@ -226,6 +232,44 @@ func searchHandler(w http.ResponseWriter, r *http.Request) {
 }
 }
 
+func filterHandler(w http.ResponseWriter, r *http.Request) {
+    query1 := r.FormValue("query1")
+	query2 := r.FormValue("query2")
+	
+	if query1 == "" || query2== ""{
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+	}else{
+	t, err := template.ParseFiles("templates/index2.html","templates/header.html","templates/footer.html")
+
+	if err != nil{
+		fmt.Fprint(w, err.Error())
+	}
+
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
+    if err != nil {
+        panic(err)
+    }
+	defer db.Close()
+
+	res, err := db.Query(fmt.Sprintf("SELECT * FROM `article` WHERE `price` >= '%s' AND `price` <= '%s'", query1, query2))
+	if err != nil {
+        panic(err)
+    }
+
+	posts = []Article{}
+	for res.Next(){
+		var post Article
+		err = res.Scan(&post.Id, &post.Title, &post.Anons, &post.Price)
+		if err != nil {
+			panic(err)
+		}
+
+		posts = append(posts, post)
+	}
+
+	t.ExecuteTemplate(w, "index2", posts)
+}
+}
 
 func handleFunc(){
 	rtr := mux.NewRouter()
@@ -238,6 +282,7 @@ func handleFunc(){
 	rtr.HandleFunc("/check_login/", check_login).Methods("POST")
 	rtr.HandleFunc("/post/{id:[0-9]+}", show_post).Methods("GET", "POST")
 	rtr.HandleFunc("/search/", searchHandler).Methods("GET", "POST")
+	rtr.HandleFunc("/filter/", filterHandler).Methods("GET", "POST")
 
 	http.Handle("/", rtr)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
