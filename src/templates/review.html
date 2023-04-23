@@ -1,0 +1,29 @@
+{{ define "review" }}
+
+{{ template "header" }}
+
+<main class="px-3">
+    <h1 class="cover-heading">Add your review</h1>
+    <form action="/save_review/" method="post">
+        <input type="text" name="name" id="name" placeholder="Your name" class="form-control input"><br>
+        <textarea name="text" id="text" cols="30" rows="5" class="form-control" placeholder="Your opinion"></textarea><br>
+        <input type="number" name="rating" id="rating" placeholder="Give rating from 0 to 10" class="form-control input"><br>
+        <button class="btn btn-warning">Add review</button>
+    </form>
+
+    <h1 class="cover-heading" style="padding-top: 100px;">Reviews</h1>
+    <div style="display: flex; flex-wrap: wrap; width: 60%; margin: 0 auto; padding-bottom: 50px;">
+        {{ range . }}
+        <div class="alert alert-light" style="width: calc(1/2*100% - 10px);
+        margin: 5px; text-align: left;">
+            <h2>{{ .Name }}</h2>
+            <p>{{ .Text }}</p>
+            <p>{{ .Rating }}/10</p>
+        </div>
+        {{ end }}
+    </div>
+</main>
+
+{{ template "footer" }}
+
+{{ end }}

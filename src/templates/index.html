@@ -31,6 +31,7 @@
           
           <nav class="nav nav-masthead justify-content-center float-md-end">
             <a class="nav-link fw-bold py-1 px-0" aria-current="page" href="/">Home</a>
+            <a class="nav-link fw-bold py-1 px-0" href="/review/">Review</a>
             <a class="nav-link fw-bold py-1 px-0" href="/create/">Add item</a>
             <a class="nav-link fw-bold py-1 px-0" href="/register/">Sign up</a>
             <a class="nav-link fw-bold py-1 px-0" href="/login/">Log in</a>
@@ -105,42 +106,26 @@
             {{ end }}
         </div>
     </div>
-
-
-    <style>
-        .base { 
-            display: flex;
-            padding-top: 30px ;
-        
-        
-        }
-        .search {
-            width: 60%;
-            margin: 0 10px;
-           
-        }
-        .search button{
-            
-            
-        }
-        .search button:hover {
-            background-color:  rgb(189, 111, 43);; 
-            color: #FFFFFF;
-            border-color: #FF4136;
-            transition: 0.5s;
-            
-            
-        }
-        .logo{ 
-            margin: 0 20px;
-            
-        }
-        
-        #carouselExampleFade{
-            margin-top: 50px;
-        }
-        </style>
 </main>
+
+<style>
+  .base { 
+      display: flex;
+      padding-top: 30px ;
+  }
+  .search {
+      width: 60%;
+      margin: 0 10px;
+     
+  }
+  .logo{ 
+      margin: 0 20px;
+  }
+  
+  #carouselExampleFade{
+      margin-top: 50px;
+  }
+  </style>
 
 {{ template "footer" }}
 
