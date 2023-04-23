@@ -1,0 +1,77 @@
+{{ define "login" }}
+
+{{ template "header" }}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<main class="px-3">
+    <div class="login">
+    <h1 class="cover-heading">Log in</h1>
+    <form action="/check_login/" method="post" name="form2">
+        <input type="text" name="user_email" id="user_email" placeholder="Your Email" class="form-control input"><br>
+        <input type="password" name="user_password" id="user_password" placeholder="Password" class="form-control input"><br>
+        <button id="click" class="button">Log in</button>
+    </form>
+
+<div class="netu">
+    <small class="text-muted">
+        Need An Account? <a class="ml-2" href="http://localhost:8080/register/" style="text-decoration: none; color: #464646;">Sign Up Now</a>
+    </small>
+</div>
+</div>
+</main>
+
+<script>
+    $('#click').on('click', function(){
+        var user_email = document.forms["form2"]["user_email"].value;
+        var user_password = document.forms["form2"]["user_password"].value;
+
+            Swal.fire({
+            title: 'Wrong!',
+            icon : 'error',
+            showConfirmButton : true,
+        }).then(function(){
+            window.location = "http://localhost:8080/login/";
+        });
+    })
+</script>
+
+<style>
+    .login { 
+  margin: 0 auto;
+  width: 40%;
+  background: #fff;
+  padding: 40px;
+  margin: 100px auto;
+  border-radius: 10px;
+  box-shadow: rgba(3, 3, 3, 0.1) 10px 0px 50px;
+}
+
+    .login h1{
+        color: black;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .footer{
+        
+        margin-bottom: 10px;
+    }
+    .button { 
+    background-color: orange;
+    color: black ;
+    border: 2px;
+    border-radius: 10px;
+    padding: 5px 20px;
+    }
+
+    .button:hover {
+    background-color: #8df9ff;
+    color: #FFFFFF;
+    border-color: #FF4136;
+    transition: 0.5s;
+    
+}
+
+</style>
+
+{{ template "footer" }}
+
+{{ end }}
