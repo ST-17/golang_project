@@ -8,9 +8,8 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
-	
+
 	_ "github.com/go-sql-driver/mysql"
-	
 )
 
 type Article struct{
@@ -18,12 +17,18 @@ type Article struct{
 	Title, Anons string
 	Price int
 }
+type Review struct{
+	Id uint16
+	Name, Text string
+	Rating int
+}
 type User struct{
 	Id uint16
 	Name, Email, Password string
 }
 
 var posts = []Article{}
+var comments = []Review{}
 var showPost = Article{}
 var user = User{}
 
@@ -87,7 +92,6 @@ func save_article(w http.ResponseWriter, r *http.Request){
     }
 		defer db.Close()
 		
-		// Установка данных
 		insert, err := db.Query(fmt.Sprintf("INSERT INTO `article` (`title`,`anons`,`price`) VALUES('%s','%s','%d')", title, anons, price))
 		if err != nil{
 			panic(err)
@@ -271,6 +275,67 @@ func filterHandler(w http.ResponseWriter, r *http.Request) {
 }
 }
 
+func review(w http.ResponseWriter, r *http.Request){
+	t, err := template.ParseFiles("templates/review.html","templates/header.html","templates/footer.html")
+
+	if err != nil{
+		fmt.Fprint(w, err.Error())
+	}
+
+	db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
+    if err != nil {
+        panic(err)
+    }
+	defer db.Close()
+
+	res, err := db.Query("SELECT * FROM `review`")
+	if err != nil {
+        panic(err)
+    }
+
+	comments = []Review{}
+	for res.Next(){
+		var comment Review
+		err = res.Scan(&comment.Id, &comment.Name, &comment.Text, &comment.Rating)
+		if err != nil {
+			panic(err)
+		}
+
+		comments = append(comments, comment)
+	}
+
+	t.ExecuteTemplate(w, "review", comments)
+}
+
+func save_review(w http.ResponseWriter, r *http.Request){
+	name := r.FormValue("name")
+	text := r.FormValue("text")
+	rating, err := strconv.Atoi(r.FormValue("rating"))
+	
+	if err != nil {
+		fmt.Println("Error during conversion")
+	}
+
+	if name == "" || text == ""{
+		fmt.Fprintf(w, "Not all info fill in")
+	} else{
+		db, err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/golang")
+    if err != nil {
+        panic(err)
+    }
+		defer db.Close()
+		
+		insert, err := db.Query(fmt.Sprintf("INSERT INTO `review` (`name`,`text`,`rating`) VALUES('%s','%s','%d')", name, text, rating))
+		if err != nil{
+			panic(err)
+		}
+		defer insert.Close()
+
+		http.Redirect(w, r, "/review/", http.StatusSeeOther)
+	}
+}
+
+
 func handleFunc(){
 	rtr := mux.NewRouter()
 	rtr.HandleFunc("/", index).Methods("GET")
@@ -283,6 +348,8 @@ func handleFunc(){
 	rtr.HandleFunc("/post/{id:[0-9]+}", show_post).Methods("GET", "POST")
 	rtr.HandleFunc("/search/", searchHandler).Methods("GET", "POST")
 	rtr.HandleFunc("/filter/", filterHandler).Methods("GET", "POST")
+	rtr.HandleFunc("/review/", review).Methods("GET")
+	rtr.HandleFunc("/save_review/", save_review).Methods("POST")
 
 	http.Handle("/", rtr)
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("./static/"))))
